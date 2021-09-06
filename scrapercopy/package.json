@@ -1,0 +1,65 @@
+{
+  "name": "@scale/crawler-providers",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "homepage": "https://github.com/scaleapi/crawler-providers/tree/main#readme",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "lib/puppeteer-lambda.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scaleapi/crawler-providers.git"
+  },
+  "scripts": {
+    "scrape": "ts-node -r dotenv/config src/scripts/run.ts",
+    "testCode": "ts-node -r dotenv/config testCode.ts",
+    "generate": "ts-node -r dotenv/config src/scripts/generate.ts",
+    "check-useragent": "ts-node -r dotenv/config src/scripts/check-useragent.ts",
+    "update-providers": "ts-node -r dotenv/config src/scripts/update-providers",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "tsc --project ./"
+  },
+  "bugs": {
+    "url": "https://github.com/scaleapi/crawler-providers/issues"
+  },
+  "devDependencies": {
+    "@types/argparse": "^2.0.10",
+    "@types/aws-lambda": "^8.10.81",
+    "@types/dateformat": "^3.0.1",
+    "@types/html-to-text": "^8.0.1",
+    "@types/js-yaml": "^4.0.2",
+    "@types/lodash": "^4.14.172",
+    "@types/node": "^16.4.7",
+    "@types/uuid": "^8.3.1",
+    "argparse": "^2.0.1",
+    "dotenv": "^10.0.0",
+    "prettier": "^2.3.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.961.0",
+    "axios": "^0.21.1",
+    "dateformat": "^4.5.1",
+    "html-entities": "^2.3.2",
+    "html-to-text": "^8.0.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "parse-url": "^5.0.7",
+    "puppeteer": "^10.2.0",
+    "puppeteer-core": "^10.2.0",
+    "puppeteer-response-waiter": "^1.6.0",
+    "tslib": "^2.3.0",
+    "uuid": "^8.3.2"
+  },
+  "_moduleAliases": {
+    "src": "src"
+  }
+}

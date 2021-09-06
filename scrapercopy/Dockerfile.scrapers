@@ -1,0 +1,43 @@
+FROM amazon/aws-lambda-nodejs:14 AS base
+
+# Install Chrome to get all of the dependencies installed
+ADD https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm chrome.rpm
+RUN yum install -y ./chrome.rpm
+RUN npm i yarn -g
+
+FROM base AS build
+
+COPY *.json yarn.lock /
+ENV PATH="/node_modules/.bin:$PATH"
+
+COPY *.json /
+RUN yarn install --frozen-lockfile --non-interactive
+
+COPY src /src
+WORKDIR /
+RUN yarn build
+
+FROM base AS deploy
+
+ARG VERSION_HASH=unspecified
+ENV NODE_ENV production
+
+WORKDIR ${LAMBDA_TASK_ROOT}
+
+# Module resolution seems to break for src/ if we don't put it at TASK_ROOT
+COPY --from=build *.json yarn.lock ./
+COPY --from=build /package.json ./
+RUN yarn install --frozen-lockfile --non-interactive --production
+
+COPY run ./run
+COPY --from=build /dist ./
+
+COPY setup_setuid_sandbox.sh ./
+RUN bash ./setup_setuid_sandbox.sh
+ENV CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
+
+ENV VERSION_HASH=${VERSION_HASH}
+
+EXPOSE 3000
+
+CMD ["src/handlers/index.default"]

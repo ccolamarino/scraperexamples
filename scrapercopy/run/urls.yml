@@ -1,0 +1,4 @@
+.jane: # add . to the provider name to skip all its urls
+  - https://jane.com/deal/1441408/slip-on-espadrille-wedges
+.hm:
+  # - https://www2.hm.com/en_us/productpage.0920829010.html # ignore this url
